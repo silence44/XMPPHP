@@ -10,5 +10,10 @@
         },
         "extra": {
                 "installer-name": "XMPPHP"
+        },
+        "autoload": {
+                "classmap": [
+                        "XMPPHP/"
+                ]
         }
 }
