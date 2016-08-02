@@ -1,8 +1,8 @@
 {
-        "name": "fahad19/xmpphp",
+        "name": "silence44/xmpp_php",
         "type": "library",
         "description": "XMPPHP is an elegant PHP library for XMPP (aka Jabber, Google Talk, Facebook etc).",
-        "homepage": "https://github.com/fahad19/XMPPHP",
+        "homepage": "https://github.com/silence44/xmpp_php",
         "license": "GPL",
         "require": {
                 "php": ">=5.3.0",
