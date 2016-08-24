@@ -237,18 +237,24 @@ class XMPPHP_XMPP extends XMPPHP_XMLStream {
   /**
    * Message handler
    *
-   * @param string $xml
+   * @param XMPPHP_XMLObj $xml
    */
-  public function message_handler($xml) {
+  public function message_handler(\XMPPHP_XMLObj $xml) {
     if (isset($xml->attrs['type'])) {
       $payload['type'] = $xml->attrs['type'];
     } else {
       $payload['type'] = 'chat';
     }
     $payload['from'] = $xml->attrs['from'];
-    $payload['body'] = $xml->sub('body')->data;
+    $body = $xml->sub('body');
+    if (!$body instanceof \XMPPHP_XMLObj) {
+      $this->log->log('This message does not has a body: ' . $xml->data, XMPPHP_Log::LEVEL_WARNING);
+
+      return;
+    }
+    $payload['body'] = $body->data;
     $payload['xml'] = $xml;
-    $this->log->log("Message: {$xml->sub('body')->data}", XMPPHP_Log::LEVEL_DEBUG);
+    $this->log->log("Message: {$body->data}", XMPPHP_Log::LEVEL_DEBUG);
     $this->event('message', $payload);
   }
 
