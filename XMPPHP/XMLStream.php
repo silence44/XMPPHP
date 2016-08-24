@@ -508,9 +508,10 @@ class XMPPHP_XMLStream {
     if (array_key_exists('XMLNS', $attr)) {
       $this->current_ns[$this->xml_depth] = $attr['XMLNS'];
     } else {
-      $this->current_ns[$this->xml_depth] = $this->current_ns[$this->xml_depth - 1];
-      if (!$this->current_ns[$this->xml_depth])
-        $this->current_ns[$this->xml_depth] = $this->default_ns;
+      $this->current_ns[$this->xml_depth]
+          = array_key_exists($this->xml_depth - 1, $this->current_ns)
+          ? $this->current_ns[$this->xml_depth - 1]
+          : $this->default_ns;
     }
     $ns = $this->current_ns[$this->xml_depth];
     foreach ($attr as $key => $value) {
@@ -526,7 +527,7 @@ class XMPPHP_XMLStream {
       $name = $name[1];
     }
     $obj = new XMPPHP_XMLObj($name, $ns, $attr);
-    if ($this->xml_depth > 1) {
+    if ($this->xml_depth > 1 && array_key_exists($this->xml_depth - 1, $this->xmlobj)) {
       $this->xmlobj[$this->xml_depth - 1]->subs[] = $obj;
     }
     $this->xmlobj[$this->xml_depth] = $obj;
@@ -631,7 +632,8 @@ class XMPPHP_XMLStream {
    * @param string   $data
    */
   public function charXML($parser, $data) {
-    if (array_key_exists($this->xml_depth, $this->xmlobj)) {
+    if (array_key_exists($this->xml_depth, $this->xmlobj)
+        && $this->xmlobj[$this->xml_depth] instanceof \XMPPHP_XMLObj) {
       $this->xmlobj[$this->xml_depth]->data .= $data;
     }
   }
