@@ -145,6 +145,7 @@ class XMPPHP_XMLObj {
    * @param string $name
    * @param string $attrs
    * @param string $ns
+   * @return \XMPPHP_XMLObj|mixed
    */
   public function sub($name, $attrs = null, $ns = null) {
     #TODO attrs is ignored
