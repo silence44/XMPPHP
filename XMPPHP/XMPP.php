@@ -113,7 +113,7 @@ class XMPPHP_XMPP extends XMPPHP_XMLStream {
    * @param boolean $printlog
    * @param string  $loglevel
    */
-  public function __construct($host, $port, $user, $password, $resource, $server = null, $printlog = false, $loglevel = null) {
+  public function __construct($host, $port, $user = null, $password = null, $resource = null, $server = null, $printlog = false, $loglevel = null) {
     parent::__construct($host, $port, $printlog, $loglevel);
 
     $this->user = $user;
@@ -140,6 +140,30 @@ class XMPPHP_XMPP extends XMPPHP_XMLStream {
     $this->addXPathHandler('iq/{jabber:iq:roster}query', 'roster_iq_handler');
     // For DIGEST-MD5 auth :
     $this->addXPathHandler('{urn:ietf:params:xml:ns:xmpp-sasl}challenge', 'sasl_challenge_handler');
+  }
+
+  /**
+   * @param string $user
+   */
+  public function setUser($user)
+  {
+    $this->user = $user;
+  }
+
+  /**
+   * @param string $password
+   */
+  public function setPassword($password)
+  {
+    $this->password = $password;
+  }
+
+  /**
+   * @param string $resource
+   */
+  public function setResource($resource)
+  {
+    $this->resource = $resource;
   }
 
   /**
